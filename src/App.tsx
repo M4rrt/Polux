@@ -1,24 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { CharactersListing } from "./components/characters/charactersList";
+import { Route, Routes } from "react-router";
+import { BrowserRouter } from "react-router-dom";
+import { Wrapper } from "./components/wrapper/wrapper";
+import { SheetPage } from "./pages/SheetPage";
+import { useLiveQuery } from "dexie-react-hooks";
+import { db } from "./components/db/db";
+import { AttributeData } from "./types/CharacterType";
+import './App.css'
+import { ConfigProvider } from "antd";
+import locale from 'antd/locale/pt_BR';
 
 function App() {
+
+  const CharactersList = useLiveQuery(
+    async () => {
+        const characters = await db.characters
+            .toArray()
+      return characters
+    }
+)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ConfigProvider
+        locale={locale}
+        theme={ { 
+          token : {
+            fontSize : 10  
+          },
+        }}
+      >
+
+      <BrowserRouter>
+					<Routes>
+            <Route path="/" element={<Wrapper/>}>
+              <Route path="/" element={<CharactersListing charactersList={CharactersList}/>}></Route>
+              <Route path="/Ficha/*" element={<SheetPage/>}></Route>
+            </Route>
+          </Routes>
+      </BrowserRouter>
+      </ConfigProvider>
+
     </div>
   );
 }
