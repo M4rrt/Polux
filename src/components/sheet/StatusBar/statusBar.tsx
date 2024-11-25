@@ -5,8 +5,6 @@ import { PointsBar } from "../../poinstBar.tsx/pointsBar"
 import { rankToMana } from "../../../util/util"
 import { MultiPointsBar } from "../../poinstBar.tsx/multiPointsBar"
 import { Points } from "../../../types/statusBarType"
-import { update } from "lodash"
-
 interface IStatusBar {
     character: CharacterType,
     characterUpdate: (update: Partial<CharacterType>) => void,
