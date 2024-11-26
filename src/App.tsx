@@ -6,41 +6,41 @@ import { SheetPage } from "./pages/SheetPage";
 import { useLiveQuery } from "dexie-react-hooks";
 import { db } from "./components/db/db";
 import { AttributeData } from "./types/CharacterType";
-import './App.css'
+import "./App.css";
 import { ConfigProvider } from "antd";
-import locale from 'antd/locale/pt_BR';
+import locale from "antd/locale/pt_BR";
+import { NotFound } from "./pages/NotFound";
 
 function App() {
-
-  const CharactersList = useLiveQuery(
-    async () => {
-        const characters = await db.characters
-            .toArray()
-      return characters
-    }
-)
+  const CharactersList = useLiveQuery(async () => {
+    const characters = await db.characters.toArray();
+    return characters;
+  });
 
   return (
     <div className="App">
       <ConfigProvider
         locale={locale}
-        theme={ { 
-          token : {
-            fontSize : 10  
+        theme={{
+          token: {
+            fontSize: 10,
           },
         }}
       >
-
-      <BrowserRouter>
-					<Routes>
-            <Route path="/" element={<Wrapper/>}>
-              <Route path="/" element={<CharactersListing charactersList={CharactersList}/>}></Route>
-              <Route path="/Ficha/*" element={<SheetPage/>}></Route>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Wrapper />}>
+              <Route
+                path="/"
+                element={<CharactersListing charactersList={CharactersList} />}
+              ></Route>
+              <Route path="/Ficha/*" element={<SheetPage />}></Route>
+              <Route path="*" element={<NotFound />}></Route>
             </Route>
+            <Route path="/*" element={<NotFound />}></Route>
           </Routes>
-      </BrowserRouter>
+        </BrowserRouter>
       </ConfigProvider>
-
     </div>
   );
 }
