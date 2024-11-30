@@ -1,4 +1,4 @@
-import { Button, Col, Image, Input, Row } from "antd";
+import { Button, Col, Image, Input, InputNumber, Row } from "antd";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import logo from '../../images/logo.png';
@@ -19,10 +19,8 @@ export const CreateCharacter = () => {
     const canSave: boolean = useMemo(() => {
         const canSave = (
             GeralSheet.age !== undefined &&
-            GeralSheet.statusBar.maxMana !== undefined &&
-            GeralSheet.statusBar.maxLife !== undefined &&
             GeralSheet.height !== undefined &&
-            // GeralSheet.image !== undefined &&
+            GeralSheet.image !== undefined &&
             GeralSheet.money !== undefined &&
             GeralSheet.name !== undefined &&
             GeralSheet.rank !== undefined &&
@@ -48,8 +46,8 @@ export const CreateCharacter = () => {
             console.log(statusBar)
             try {
                 await db.characters.add({ ...GeralSheet, attributes: actualAttributes, statusBar })
+                console.log('foi?')
             } catch {
-
                 console.log('n pode ')
             }
         }
@@ -132,7 +130,7 @@ export const CreateCharacter = () => {
                                             Jogador:
                                         </Col>
                                         <Col span={14}>
-                                            <Input className={'purple-shadow'} size="small" style={{ backgroundColor: "transparent", border: '1px solid black', fontSize: 10 }} placeholder="Nome do Jogador"></Input>
+                                            <Input onChange={(e)=> updatePartialCharacter({ playerName : e.target.value})} className={'purple-shadow'} size="small" style={{ backgroundColor: "transparent", border: '1px solid black', fontSize: 10 }} placeholder="Nome do Jogador"></Input>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -142,7 +140,7 @@ export const CreateCharacter = () => {
                                             Dinheiro:
                                         </Col>
                                         <Col span={14}>
-                                            <Input className={'purple-shadow'} size="small" style={{ backgroundColor: "transparent", border: '1px solid black', fontSize: 10 }} placeholder="Dinheiro na Conta"></Input>
+                                            <InputNumber min={0} onChange={(e)=> e!==null ? updatePartialCharacter({ money : e}) : null} className={'purple-shadow'} size="small" style={{ backgroundColor: "transparent", border: '1px solid black', fontSize: 10 }} placeholder="Dinheiro na Conta"></InputNumber>
                                         </Col>
                                     </Row>
 
@@ -157,7 +155,7 @@ export const CreateCharacter = () => {
                                             Nome:
                                         </Col>
                                         <Col span={14}>
-                                            <Input className={'purple-shadow'} size="small" style={{ backgroundColor: "transparent", border: '1px solid black', fontSize: 10 }} placeholder="Nome do Personagem"></Input>
+                                            <Input onChange={(e)=> updatePartialCharacter({ name: e.target.value})} className={'purple-shadow'} size="small" style={{ backgroundColor: "transparent", border: '1px solid black', fontSize: 10 }} placeholder="Nome do Personagem"></Input>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -167,7 +165,7 @@ export const CreateCharacter = () => {
                                             Peso:
                                         </Col>
                                         <Col span={14}>
-                                            <Input className={'purple-shadow'} size="small" style={{ backgroundColor: "transparent", border: '1px solid black', fontSize: 10 }} placeholder="Peso"></Input>
+                                            <Input onChange={(e)=> updatePartialCharacter({ weight: e.target.value})} className={'purple-shadow'} size="small" style={{ backgroundColor: "transparent", border: '1px solid black', fontSize: 10 }} placeholder="Peso"></Input>
                                         </Col>
                                     </Row>
 
@@ -182,7 +180,7 @@ export const CreateCharacter = () => {
                                             Idade:
                                         </Col>
                                         <Col span={14}>
-                                            <Input className={'purple-shadow'} size="small" style={{ backgroundColor: "transparent", border: '1px solid black', fontSize: 10 }} placeholder="Idade"></Input>
+                                            <InputNumber  min={0} onChange={(e)=> e !== null ? updatePartialCharacter({ age: e }) : null} className={'purple-shadow'} size="small" style={{ backgroundColor: "transparent", border: '1px solid black', fontSize: 10 }} placeholder="Idade"></InputNumber>
                                         </Col>
                                     </Row>
                                 </Col>
@@ -192,7 +190,7 @@ export const CreateCharacter = () => {
                                             Altura:
                                         </Col>
                                         <Col span={14}>
-                                            <Input className={'purple-shadow'} size="small" style={{ backgroundColor: "transparent", border: '1px solid black', fontSize: 10 }} placeholder="Altura"></Input>
+                                            <Input onChange={(e)=> updatePartialCharacter({ height: e.target.value})}  className={'purple-shadow'} size="small" style={{ backgroundColor: "transparent", border: '1px solid black', fontSize: 10 }} placeholder="Altura"></Input>
                                         </Col>
                                     </Row>
 
@@ -203,7 +201,7 @@ export const CreateCharacter = () => {
                             <div style={{ marginRight: 22 }}>
                                 <Image src={logo} height={53} preview={false}></Image>
                                 <br />
-                                <Button size="small" style={{ fontSize: 10, border: "1px solid black", background: 'transparent', borderRadius: 20, width: 72, marginTop: 7 }} onClick={() => { }}>
+                                <Button disabled={!canSave} size="small" style={{ fontSize: 10, border: "1px solid black", background: 'transparent', borderRadius: 20, width: 72, marginTop: 7 }} onClick={() => SaveCharacterSheet()}>
                                     <span style={{ borderBottom: -2, }}>
                                         Salvar
                                     </span>

@@ -1,13 +1,9 @@
-import { Col, Image, message, Row } from "antd";
-import { db } from "../db/db";
-import patrono1 from "../../images/Patrono_alquimico.jpeg"
-import patrono2 from "../../images/Patrono_dragões.jpeg"
-import patrono3 from "../../images/Patrono_licantropos.jpeg"
-import { useNavigate } from "react-router";
-import { numberToRank, randomPatron } from "../../util/util";
-import { iconLibrary, iconPlus } from "../icons/icons";
-import { CharacterType } from "../../types/CharacterType";
+import { Col, Row } from "antd";
 import { FC } from "react";
+import { useNavigate } from "react-router";
+import { CharacterType } from "../../types/CharacterType";
+import { numberToRank, randomPatron } from "../../util/util";
+import { iconLibrary } from "../icons/icons";
 
 interface ICharactersList {
     charactersList: CharacterType[] | undefined
