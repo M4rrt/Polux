@@ -1,4 +1,4 @@
-import { Button, Col, Image, Input, InputNumber, Row } from "antd";
+import { Button, Col, Image, Input, InputNumber, Row, Tooltip } from "antd";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import logo from '../../images/logo.png';
@@ -49,6 +49,9 @@ export const CreateCharacter = () => {
                 console.log('foi?')
             } catch {
                 console.log('n pode ')
+            } finally {
+                const id = await db.characters.count()
+                navigate(`/Ficha/${id}`)
             }
         }
     }
@@ -199,7 +202,9 @@ export const CreateCharacter = () => {
                         </Col>
                         <Col span={4} style={{ justifyItems: "self-end", textAlign: "center" }}>
                             <div style={{ marginRight: 22 }}>
-                                <Image src={logo} height={53} preview={false}></Image>
+                                <Tooltip title={<>Click Aqui Para Voltar</>} >
+                                <Image onClick={()=>window.history.back()}src={logo} height={53} preview={false}/>
+                                </Tooltip>
                                 <br />
                                 <Button disabled={!canSave} size="small" style={{ fontSize: 10, border: "1px solid black", background: 'transparent', borderRadius: 20, width: 72, marginTop: 7 }} onClick={() => SaveCharacterSheet()}>
                                     <span style={{ borderBottom: -2, }}>

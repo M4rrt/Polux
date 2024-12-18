@@ -1,15 +1,15 @@
-import { CharactersListing } from "./components/characters/charactersList";
-import { Route, Routes } from "react-router";
-import { BrowserRouter } from "react-router-dom";
-import { Wrapper } from "./components/wrapper/wrapper";
-import { SheetPage } from "./pages/SheetPage";
-import { useLiveQuery } from "dexie-react-hooks";
-import { db } from "./components/db/db";
-import { AttributeData } from "./types/CharacterType";
-import "./App.css";
 import { ConfigProvider } from "antd";
 import locale from "antd/locale/pt_BR";
+import { useLiveQuery } from "dexie-react-hooks";
+import { Route, Routes } from "react-router";
+import { BrowserRouter } from "react-router-dom";
+import "./App.css";
+import { CharactersLibrary } from "./components/characters/charactersLibrary";
+import { db } from "./components/db/db";
+import { MainPage } from "./components/mainPage/mainPage";
+import { Wrapper } from "./components/wrapper/wrapper";
 import { NotFound } from "./pages/NotFound";
+import { SheetPage } from "./pages/SheetPage";
 
 function App() {
   const CharactersList = useLiveQuery(async () => {
@@ -30,9 +30,10 @@ function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Wrapper />}>
+            <Route path="/Biblioteca/" element={<CharactersLibrary/>}></Route>
               <Route
                 path="/"
-                element={<CharactersListing charactersList={CharactersList} />}
+                element={<MainPage charactersList={CharactersList} />}
               ></Route>
               <Route path="/Ficha/*" element={<SheetPage />}></Route>
               <Route path="*" element={<NotFound />}></Route>
