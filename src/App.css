@@ -1,6 +1,21 @@
 .purple-shadow:focus {
-  box-shadow: 0px 0px 5px 1px #4b4ae0;
+  box-shadow: 0px 3px 4px 0px #4b4ae0;
+  border: 2px solid black !important;
 }
+.purple-shadow:hover {
+  border: 2px solid black !important;
+  box-shadow: 0px 3px 4px 0px #4b4ae0;
+} 
+
+.black-hover.btn:hover {
+  border: 2px solid black !important;
+ color: black !important
+}
+.black-hover.btn {
+  border: 1px solid black;
+ color: black !important
+}
+
 * {
   text-overflow: ellipsis;
 }

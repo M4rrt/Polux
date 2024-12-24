@@ -10,6 +10,8 @@ export interface CharacterType {
     money: number;
     statusBar: statusBar,
     attributes: AttributeData[];
+    runes : rune[]
+    anotations : anotation[]
 }
 
 export type statusBar = { 
@@ -35,4 +37,17 @@ export type Pericia = {
     treined?: boolean;
     attMod?: number;
     bonus?: number
+}
+
+export type rune = {
+    name : string;
+    image : string;
+    description : string;
+    rank : number;
+}
+
+export type anotation = {
+    title : string; 
+    image: string; 
+    description : string;
 }
