@@ -12,6 +12,14 @@ export interface CharacterType {
     attributes: AttributeData[];
     runes : rune[]
     anotations : anotation[]
+    classes: classes[]
+    mainColor : string
+}
+
+export type classes = { 
+    day : string,
+    name : string,
+    color: string
 }
 
 export type statusBar = { 

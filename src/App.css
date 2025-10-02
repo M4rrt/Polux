@@ -1,11 +1,23 @@
 .purple-shadow:focus {
   box-shadow: 0px 3px 4px 0px #4b4ae0;
-  border: 2px solid black !important;
+  border: 2px solid black;
 }
 .purple-shadow:hover {
-  border: 2px solid black !important;
+  border: 2px solid black;
   box-shadow: 0px 3px 4px 0px #4b4ae0;
 } 
+
+.btn.transparent {
+  background-color: transparent;
+  border:  1px solid black;
+  border-radius: 8px;
+}
+.ant-btn-default.btn.transparent:hover {
+  background-color: transparent;
+  border:  1px solid black;
+  border-radius: 8px;
+  color: black;
+}
 
 .black-hover.btn:hover {
   border: 2px solid black !important;
@@ -14,6 +26,14 @@
 .black-hover.btn {
   border: 1px solid black;
  color: black !important
+}
+.btn-transparent.green {
+  background-color: transparent;
+  border:  1px solid green;
+  border-radius: 8px;
+}
+.btn-transparent.green:hover {
+  color: green!important
 }
 
 * {

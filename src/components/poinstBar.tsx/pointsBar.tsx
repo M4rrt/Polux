@@ -21,7 +21,7 @@ export const PointsBar: FC<IPointsBar> = (
 
 
     return <>
-        <Col className="points-bar" span={24} style={{backgroundColor : '#b80096',height : 44}}>
+        <Col className="points-bar" span={24} style={{backgroundColor : '#0100FD',height : 44}}>
             <div
                 className="points-bar-progress"
                 style={{ width: `${percentage}%`, background: `${barColor}`,height: 44 }}

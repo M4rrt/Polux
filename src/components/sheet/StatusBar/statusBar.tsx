@@ -74,21 +74,25 @@ export const StatusBar: FC<IStatusBar> = ({ character, characterUpdate }) => {
         },
     ], [character])
 
-    return <Col style={{ width: '100%', position: 'absolute', bottom: 0, backgroundColor: "#858585", paddingLeft: 24, paddingRight: 24, paddingTop: 12, paddingBottom: 12 }}>
+    return <Col style={{ width: '100%', }}>
         <Row>
-            <Col span={2}>
-                <Image src={character.image} width={76} preview={{ mask: false }} />
-            </Col>
             <Col span={20}>
-                <h3 style={{ margin: 0 }}>
+                <h3 style={{ margin: 0, fontSize: 20 }}>
                     {character.name}
                 </h3>
                 <Row>
                     <Col span={24}>
-                        <MultiPointsBar Points={Status}></MultiPointsBar>
+                        <Row>
+                            <Col span={4} style={{ fontSize: 16 }}>
+                                Vida:
+                            </Col>
+                            <Col span={20}>
+                                <MultiPointsBar Points={Status} />
+                            </Col>
+                        </Row>
                     </Col>
-                    <Col span={24} style={{paddingTop : 12}}>
-                        {character && <PointsBar points={{ currentPoints: character.statusBar?.currentMana, maxPoints: rankToMana(character.rank), update: manaUpdate }} barColor="#ff00d0"></PointsBar>}
+                    <Col span={24} style={{ paddingTop: 12 }}>
+                        Mana: {character && <PointsBar points={{ currentPoints: character.statusBar?.currentMana, maxPoints: rankToMana(character.rank), update: manaUpdate }} barColor="#0100FD" />}
                     </Col>
                 </Row>
             </Col>
