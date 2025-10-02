@@ -3,8 +3,8 @@ import { Button, Col, GetProp, Image, message, Row, Upload, UploadProps } from "
 import { FC, useState } from "react";
 import { randomPatron } from "../../util/util";
 
-type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
-
+// type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0];
+// should refactor it, this component is not reusable, should no have hard set sizes
 
 interface IUploadImage {
     label: string,
@@ -16,14 +16,16 @@ export const UploadImage: FC<IUploadImage> = ({ label, file, updateFile }) => {
 
 
     const handleChange = async (e: any) => {
+        console.log(e.target.files[0])
         const b64 = await blobToBase64(e.target.files[0]) as string
+        console.log(b64)
         updateFile(b64)
     }
 
     const blobToBase64 = (F: File) => new Promise((resolve, reject) => {
         const reader = new FileReader()
         reader.readAsDataURL(F)
-        reader.onload = () => resolve(reader.result)
+        reader.onload = () => {resolve(reader.result)}
         reader.onerror = er => reject(er)
     })
 

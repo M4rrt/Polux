@@ -61,7 +61,7 @@ export const CharactersLibrary: FC<ICharactersLibrary> = () => {
         ))
 
     return (
-        <Col span={24} style={{ height: "100%", backgroundColor: "rgb(238, 238, 238, 0.95)", padding: 52 }}>
+        <Col span={24} style={{ height: "100%", backgroundColor: "rgb(238, 238, 238, 0.97)", padding: 52 }}>
             <Row gutter={[40, 40]} >
                 {Library?.map((char) => {
                     return (

@@ -2,19 +2,20 @@ import { Button, Col, Image, Input, InputNumber, Row, Tooltip } from "antd";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import logo from '../../images/logo.png';
-import { AttributeData, CharacterType, Pericia, statusBar } from "../../types/CharacterType";
-import { attributeModifier, MOCK_ATTRIBUTES, rankToMana, rankToTrainingModifier } from "../../util/util";
+import { AttributeData, CharacterType, Pericia, rune, statusBar } from "../../types/CharacterType";
+import { attributeModifier, CalculateMaxLife, MOCK_ATTRIBUTES, MOCK_MAIN, rankToMana, rankToTrainingModifier } from "../../util/util";
 import { db } from "../db/db";
 import { UploadImage } from "../uploadImage/uploadImage";
 import { SelectRank } from "./SelectRank/selectRank";
 import { AttributesTable } from "./attributesTable/attributesTable";
 import { SkillsTable } from "./skillsRender/skillsTable";
+import { anotation } from "../../types/CharacterType";
 
 export const CreateCharacter = () => {
     const navigate = useNavigate()
 
-    const [GeralSheet, setGeralSheet] = useState<CharacterType>({ statusBar: { maxLife: 50, maxMana: 15, maxArmor: 0, currentArmor: 0, currentLife: 0, currentMana: 0, currentShield: 0 }, rank: 10 } as CharacterType)
-    // console.log(JSON.stringify(GeralSheet))
+    const [GeralSheet, setGeralSheet] = useState<CharacterType>(MOCK_MAIN)
+    console.log(JSON.stringify(GeralSheet))
 
     const canSave: boolean = useMemo(() => {
         const canSave = (
@@ -38,22 +39,6 @@ export const CreateCharacter = () => {
                 }
             }
         )
-    }
-
-    const SaveCharacterSheet = async () => {
-        if (canSave) {
-            const statusBar: statusBar = { ...GeralSheet.statusBar, maxLife: 50 + attributes[2].Attribute * 5, maxMana: rankToMana(GeralSheet.rank) }
-            console.log(statusBar)
-            try {
-                await db.characters.add({ ...GeralSheet, attributes: actualAttributes, statusBar })
-                console.log('foi?')
-            } catch {
-                console.log('n pode ')
-            } finally {
-                const id = await db.characters.count()
-                navigate(`/Ficha/${id}`)
-            }
-        }
     }
 
     const [attributes, setAttributes] = useState<AttributeData[]>(MOCK_ATTRIBUTES.map((attribute) => {
@@ -81,6 +66,23 @@ export const CreateCharacter = () => {
         return actual
     }, [attributes])
 
+    const SaveCharacterSheet = async () => {
+        if (canSave) {
+            const statusBar: statusBar = { ...GeralSheet.statusBar, maxLife: CalculateMaxLife(attributes), maxMana: rankToMana(GeralSheet.rank) }
+            console.log(statusBar)
+            try {
+                await db.characters.add({ ...GeralSheet, attributes: actualAttributes, statusBar, runes : [] as rune[],anotations : [] as anotation[] })
+            } catch {
+                console.log('n pode ')
+            } finally {
+                const CharacterList = await db.characters.toArray()
+                const localCharacter = CharacterList[CharacterList.length-1]
+                console.log("Nova Ficha", JSON.stringify(localCharacter))
+
+                navigate(`/Ficha/${localCharacter.id}`)
+            }
+        }
+    }
 
     const updateAttributes = (_: AttributeData[]) => {
         setAttributes(_)
@@ -103,7 +105,7 @@ export const CreateCharacter = () => {
     }
 
     return (
-        <Col className="SheetHolder" style={{ overflow: "auto", height: "100%", backgroundColor: "rgb(227, 225, 230, 0.95)" }}>
+        <Col className="SheetHolder" style={{ overflow: "auto", height: "100%", backgroundColor: "rgb(227, 225, 230, 0.97)" }}>
             <Row style={{ padding: 30 }}>
                 <Col span={5}>
                     <Row style={{ alignItems: "center" }}>
@@ -143,7 +145,7 @@ export const CreateCharacter = () => {
                                             Dinheiro:
                                         </Col>
                                         <Col span={14}>
-                                            <InputNumber min={0} onChange={(e)=> e!==null ? updatePartialCharacter({ money : e}) : null} className={'purple-shadow'} size="small" style={{ backgroundColor: "transparent", border: '1px solid black', fontSize: 10 }} placeholder="Dinheiro na Conta"></InputNumber>
+                                            <InputNumber min={0} onChange={(e)=> e!==null ? updatePartialCharacter({ money : e}) : null} className={'purple-shadow'} size="small" style={{ backgroundColor: "transparent", border: '1px solid black', fontSize: 10, width : "100%" }} placeholder="Dinheiro na Conta"></InputNumber>
                                         </Col>
                                     </Row>
 
@@ -183,7 +185,7 @@ export const CreateCharacter = () => {
                                             Idade:
                                         </Col>
                                         <Col span={14}>
-                                            <InputNumber  min={0} onChange={(e)=> e !== null ? updatePartialCharacter({ age: e }) : null} className={'purple-shadow'} size="small" style={{ backgroundColor: "transparent", border: '1px solid black', fontSize: 10 }} placeholder="Idade"></InputNumber>
+                                            <InputNumber  min={0} onChange={(e)=> e !== null ? updatePartialCharacter({ age: e }) : null} className={'purple-shadow'} size="small" style={{ backgroundColor: "transparent", border: '1px solid black', fontSize: 10, width : "100%" }} placeholder="Idade"></InputNumber>
                                         </Col>
                                     </Row>
                                 </Col>

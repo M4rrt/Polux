@@ -30,7 +30,7 @@ export const SkillsTable: FC<ISkillTables> = ({ skills, updatePericia, trainingM
                 <Col span={24}>
                     <Row>
                         {skills.map((att, i) => {
-                            return (<Col span={4} onClick={() => setSkillSet(i)} style={{
+                            return (<Col key={`key-${att.name}-${i}`} span={4} onClick={() => setSkillSet(i)} style={{
                                 padding: '3px',
                                 textAlign: 'center',
                                 fontSize: 10,

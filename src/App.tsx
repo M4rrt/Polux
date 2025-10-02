@@ -25,6 +25,11 @@ function App() {
           token: {
             fontSize: 10,
           },
+          components : {
+            Select : {
+              colorBgContainer : "transparent"
+            }
+          }
         }}
       >
         <BrowserRouter>

@@ -44,6 +44,9 @@ export const SelectRank: FC<ISelectRank> = ({value, updateRank}) => {
         <Select.Option value={12}>
             F
         </Select.Option>
+        <Select.Option disabled value={100} >
+            Unranked
+        </Select.Option>
     </Select>
 
 }  
