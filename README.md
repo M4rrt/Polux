@@ -6,6 +6,7 @@ it uses dexie as a wrapper for indexedDB ( noSQL database )
 so all data is saved in the browser
 
 To run in dev mode: 
+### `npm i`
 ### `npm start`
 
 Runs the app in the development mode.\
